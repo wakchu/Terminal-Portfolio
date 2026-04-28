@@ -99,7 +99,7 @@ export default function App() {
 
           {/* Scrollable Content Area */}
           <div className="flex-grow p-6 md:p-8 overflow-y-auto custom-scrollbar bg-[radial-gradient(circle_at_50%_50%,_rgba(65,72,104,0.05)_0%,_transparent_100%)]">
-            {currentPage === '/home' && <Home load={load} />}
+            {currentPage === '/home' && <Home load={load} onContactClick={() => setCurrentPage('/contact')} />}
             {currentPage === '/wakchu' && <Wakchu />}
             {currentPage === '/aboutme' && <AboutMe />}
             {currentPage === '/projects' && <Projects />}

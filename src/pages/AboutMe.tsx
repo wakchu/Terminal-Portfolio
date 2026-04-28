@@ -7,7 +7,7 @@ export function AboutMe() {
   return (
     <div className="flex flex-col gap-8 w-full max-w-4xl">
       <header className="flex flex-col gap-2">
-        <motion.h1 
+        <motion.h1
           className="press-start-2p-regular text-tokyo-secondary text-4xl md:text-5xl font-black tracking-tighter leading-none"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -25,28 +25,29 @@ export function AboutMe() {
           <BookOpen size={12} /> Biography
         </h2>
         <p className="text-tokyo-text font-medium text-sm leading-relaxed">
-          // TODO: Add brief text about yourself here.
-          <br /><br />
-          I am a passionate software developer... (placeholder text). I enjoy building interactive web applications and learning new technologies. My journey in tech started when...
-        </p>
+          I'm passionate about technology and software development.
+          I'm a curious and determined person, always ready to
+          learn and challenge myself. I'm building the foundation to
+          become a solid developer through study,
+          practical projects, and continuous experimentation.        </p>
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <InfoBox 
-          title="EDUCATION" 
+        <InfoBox
+          title="EDUCATION"
           items={[
-            '[2020-2024] B.S. Computer Science - University Name', 
+            '[2020-2024] B.S. Computer Science - University Name',
             '[2018-2020] Associate Degree - College Name'
-          ]} 
+          ]}
           accent="tertiary"
           icon={<GraduationCap size={14} />}
         />
-        <InfoBox 
-          title="WORK_HISTORY" 
+        <InfoBox
+          title="WORK_HISTORY"
           items={[
-            '[2024-Present] Software Engineer @ TechCorp', 
+            '[2024-Present] Software Engineer @ TechCorp',
             '[2022-2024] Junior Developer @ StartupInc'
-          ]} 
+          ]}
           accent="secondary"
           icon={<Briefcase size={14} />}
         />
