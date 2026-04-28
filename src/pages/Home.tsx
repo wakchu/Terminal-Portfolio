@@ -16,6 +16,9 @@ export function Home({ load }: { load: number }) {
           >
             Wakchu
           </motion.h1>
+          <p className="text-tokyo-text font-semibold text-sm sm:text-base md:text-lg px-1">
+            Junior Software Developer
+          </p>
           <div className="text-[10px] text-tokyo-muted tracking-widest font-bold flex gap-4 uppercase px-1">
             <span>[ SYSTEM_ACTIVE: TRUE ]</span>
             <span>[ VERSION: 1.0.4 ]</span>
@@ -25,17 +28,17 @@ export function Home({ load }: { load: number }) {
         <section className="border-l-2 border-tokyo-primary pl-6 py-2 bg-tokyo-surface/20 relative group">
           <div className="absolute -left-[2px] top-0 w-[2px] h-0 bg-tokyo-secondary group-hover:h-full transition-all duration-500" />
           <h2 className="press-start-2p-regular text-tokyo-secondary font-bold uppercase text-[11px] tracking-widest mb-2 flex items-center gap-2">
-            <Code2 size={12} /> Definition: Programmer
+            <Code2 size={12} /> Definition: Wakchu
           </h2>
           <p className="text-tokyo-text font-medium italic text-lg leading-relaxed">
-            "A person who writes computer software; an organism that turns caffeine into code."
+            "From Quechua, often used to indicate something isolated, unique, or standing alone. In some dialects, it describes an animal straying from the herd or a plant growing alone."
           </p>
         </section>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
           <InfoBox
             title="01_CORE_STACK"
-            items={['Typescript', 'Rust', 'React / Next.js', 'PostgreSQL']}
+            items={['Laravel', 'Typescript', 'React', 'PostgreSQL']}
             accent="tertiary"
             icon={<Database size={14} />}
           />
@@ -48,16 +51,8 @@ export function Home({ load }: { load: number }) {
         </div>
       </div>
 
-      {/* Right Column: Portrait & Monitor */}
+      {/* Right Column: Monitor */}
       <div className="md:col-span-4 flex flex-col gap-6">
-        <div className="relative overflow-hidden">
-          <img
-            alt="Developer Portrait"
-            className="w-full aspect-square object-cover"
-            src="/profile.png"
-          />
-        </div>
-
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-end text-[10px] text-tokyo-muted font-bold tracking-wider px-1">
             <span className="flex items-center gap-1"><Activity size={10} /> SYSTEM_LOAD</span>
