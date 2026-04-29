@@ -24,14 +24,15 @@ export function Contact() {
 
       <div className="flex flex-col w-full gap-3 mt-4">
         <ContactLink 
-          href="mailto:placeholder@email.com" 
+          href="mailto:stfnbrdn@gmail.com" 
           icon={<Mail size={18} />} 
-          label="Email: placeholder@email.com" 
+          label="Email: stfnbrdn@gmail.com"
+          isExternal={false}
         />
         <ContactLink 
-          href="https://linkedin.com/in/placeholder" 
+          href="https://www.linkedin.com/in/stefano-bordoni-a39b6b302/" 
           icon={<Linkedin size={18} />} 
-          label="LinkedIn: /in/placeholder" 
+          label="LinkedIn: /in/stefano-bordoni-a39b6b302/" 
         />
         <ContactLink 
           href="https://github.com/wakchu" 
@@ -39,9 +40,9 @@ export function Contact() {
           label="GitHub: wakchu" 
         />
         <ContactLink 
-          href="https://twitter.com/placeholder" 
+          href="https://x.com/wakcha_" 
           icon={<Twitter size={18} />} 
-          label="Twitter: @placeholder" 
+          label="X: @wakcha_" 
         />
       </div>
 
@@ -53,12 +54,22 @@ export function Contact() {
   );
 }
 
-function ContactLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
+function ContactLink({
+  href,
+  icon,
+  label,
+  isExternal = true,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  isExternal?: boolean;
+}) {
   return (
     <motion.a 
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className="flex items-center gap-4 p-4 border border-tokyo-border bg-tokyo-surface/40 hover:bg-tokyo-surface hover:border-tokyo-primary transition-all text-tokyo-text hover:text-tokyo-primary font-mono text-sm"

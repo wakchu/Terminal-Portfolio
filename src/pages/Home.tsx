@@ -60,7 +60,7 @@ export function Home({ load, onContactClick }: { load: number; onContactClick: (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 [grid-auto-rows:1fr]">
         <InfoBox
           title="01_CORE_STACK"
-          items={['Laravel', 'Typescript', 'React', 'MySql']}
+          items={['Laravel', 'Typescript', 'React', 'Java']}
           accent="tertiary"
           icon={<Database size={14} />}
         />
