@@ -12,19 +12,38 @@ interface Repo {
   language: string;
 }
 
+const SELECTED_PROJECTS = [
+  'worldNewsApp',
+  'gitReader',
+  'FilmLog IMDB Clone',
+  'Terminal Portfolio',
+  'GymTrack',
+  'SnowPal',
+];
+
+const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+
 export function Projects() {
   const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('https://api.github.com/users/wakchu/repos?sort=updated&per_page=6')
+    fetch('https://api.github.com/users/wakchu/repos?sort=updated&per_page=100')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch projects');
         return res.json();
       })
-      .then(data => {
-        setRepos(data);
+      .then((data: Repo[]) => {
+        const reposByName = new Map(
+          data.map(repo => [normalizeName(repo.name), repo] as const)
+        );
+
+        const selectedRepos = SELECTED_PROJECTS
+          .map(projectName => reposByName.get(normalizeName(projectName)))
+          .filter((repo): repo is Repo => Boolean(repo));
+
+        setRepos(selectedRepos);
         setLoading(false);
       })
       .catch(err => {
