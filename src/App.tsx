@@ -29,6 +29,7 @@ export default function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [load, setLoad] = useState(74);
   const [input, setInput] = useState('');
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState('/home');
   const inputRef = useRef<HTMLInputElement>(null);
   const pages = ['/home', '/wakchu', '/aboutme', '/projects', '/contact'];
@@ -56,6 +57,14 @@ export default function App() {
     : [];
 
   useEffect(() => {
+    if (suggestions.length === 0) {
+      setSelectedSuggestionIndex(0);
+      return;
+    }
+    setSelectedSuggestionIndex((prev) => Math.min(prev, suggestions.length - 1));
+  }, [suggestions.length]);
+
+  useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     const loadTimer = setInterval(() => {
       setLoad(prev => Math.min(95, Math.max(70, prev + (Math.random() * 4 - 2))));
@@ -77,6 +86,21 @@ export default function App() {
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+
+  const handleCloseClick = () => {
+    window.close();
+    window.location.assign('about:blank');
+  };
+
   const timeString = currentTime.toLocaleTimeString('en-GB', { hour12: false });
 
   return (
@@ -96,7 +120,13 @@ export default function App() {
         <div className="flex items-center gap-2 text-tokyo-muted h-full">
           <button className="hover:text-tokyo-primary p-1 transition-colors"><Minus size={16} /></button>
           <button className="hover:text-tokyo-primary p-1 transition-colors"><Square size={14} /></button>
-          <button className="hover:text-tokyo-error p-1 transition-colors"><X size={16} /></button>
+          <button
+            onClick={handleCloseClick}
+            className="hover:text-tokyo-error p-1 transition-colors"
+            aria-label="Close tab"
+          >
+            <X size={16} />
+          </button>
         </div>
       </header>
 
@@ -137,13 +167,32 @@ export default function App() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
+                if (e.key === 'ArrowDown' && suggestions.length > 0) {
+                  e.preventDefault();
+                  setSelectedSuggestionIndex((prev) => (prev + 1) % suggestions.length);
+                  return;
+                }
+
+                if (e.key === 'ArrowUp' && suggestions.length > 0) {
+                  e.preventDefault();
+                  setSelectedSuggestionIndex((prev) => (prev - 1 + suggestions.length) % suggestions.length);
+                  return;
+                }
+
                 if (e.key === 'Tab' && suggestions.length > 0) {
                   e.preventDefault();
-                  setInput(suggestions[0]);
+                  setInput(suggestions[selectedSuggestionIndex] ?? suggestions[0]);
                   return;
                 }
 
                 if (e.key === 'Enter') {
+                  if (suggestions.length > 0) {
+                    const selectedSuggestion = suggestions[selectedSuggestionIndex] ?? suggestions[0];
+                    setCurrentPage(selectedSuggestion);
+                    setInput('');
+                    return;
+                  }
+
                   const cmd = input.trim().toLowerCase();
                   if (pages.includes(cmd)) {
                     setCurrentPage(cmd);
@@ -174,9 +223,12 @@ export default function App() {
                 {suggestions.map((suggestion, index) => (
                   <button
                     key={suggestion}
-                    onClick={() => setInput(suggestion)}
+                    onClick={() => {
+                      setSelectedSuggestionIndex(index);
+                      setInput(suggestion);
+                    }}
                     className={`w-full px-3 py-1.5 text-left text-xs transition-colors ${
-                      index === 0
+                      index === selectedSuggestionIndex
                         ? 'bg-tokyo-primary/20 text-tokyo-primary'
                         : 'text-tokyo-text hover:bg-tokyo-border/50'
                     }`}
