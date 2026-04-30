@@ -31,6 +31,29 @@ export default function App() {
   const [input, setInput] = useState('');
   const [currentPage, setCurrentPage] = useState('/home');
   const inputRef = useRef<HTMLInputElement>(null);
+  const pages = ['/home', '/wakchu', '/aboutme', '/projects', '/contact'];
+  const commandAliases: Record<string, string> = { '/about': '/aboutme' };
+
+  const query = input.trim().toLowerCase();
+  const normalizedQuery = query.startsWith('/') ? query.slice(1) : query;
+
+  const scoreCommand = (command: string) => {
+    const normalizedCommand = command.slice(1);
+    if (command === query) return 0;
+    if (query && command.startsWith(query)) return 1;
+    if (normalizedQuery && normalizedCommand.startsWith(normalizedQuery)) return 2;
+    if (query && command.includes(query)) return 3;
+    return 4;
+  };
+
+  const suggestions = query
+    ? pages
+        .filter((command) => {
+          const normalizedCommand = command.slice(1);
+          return command.includes(query) || normalizedCommand.includes(normalizedQuery);
+        })
+        .sort((a, b) => scoreCommand(a) - scoreCommand(b))
+    : [];
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -114,13 +137,18 @@ export default function App() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
+                if (e.key === 'Tab' && suggestions.length > 0) {
+                  e.preventDefault();
+                  setInput(suggestions[0]);
+                  return;
+                }
+
                 if (e.key === 'Enter') {
                   const cmd = input.trim().toLowerCase();
-                  const pages = ['/home', '/wakchu', '/aboutme', '/projects', '/contact'];
                   if (pages.includes(cmd)) {
                     setCurrentPage(cmd);
-                  } else if (cmd === '/about') {
-                    setCurrentPage('/aboutme');
+                  } else if (commandAliases[cmd]) {
+                    setCurrentPage(commandAliases[cmd]);
                   }
                   setInput('');
                 }
@@ -141,13 +169,23 @@ export default function App() {
                 />
               </div>
             </div>
-            <div className="mt-4 flex flex-wrap gap-5 text-[10px] text-tokyo-muted font-bold uppercase tracking-widest relative z-20">
-              <span className="text-white/20">HINTS:</span>
-              <HintNavItem label="/projects" onClick={() => setInput('/projects')} />
-              <HintNavItem label="/wakchu" onClick={() => setInput('/wakchu')} />
-              <HintNavItem label="/aboutme" onClick={() => setInput('/aboutme')} />
-              <HintNavItem label="/contact" onClick={() => setInput('/contact')} />
-            </div>
+            {suggestions.length > 0 && (
+              <div className="mt-4 border border-tokyo-border bg-tokyo-surface/80 relative z-20">
+                {suggestions.map((suggestion, index) => (
+                  <button
+                    key={suggestion}
+                    onClick={() => setInput(suggestion)}
+                    className={`w-full px-3 py-1.5 text-left text-xs transition-colors ${
+                      index === 0
+                        ? 'bg-tokyo-primary/20 text-tokyo-primary'
+                        : 'text-tokyo-text hover:bg-tokyo-border/50'
+                    }`}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </motion.div>
       </main>
@@ -186,14 +224,6 @@ function NavItem({ label, active = false, onClick }: { label: string; active?: b
     >
       {label}
     </button>
-  );
-}
-
-function HintNavItem({ label, onClick }: { label: string, onClick?: () => void }) {
-  return (
-    <span onClick={onClick} className="text-tokyo-secondary cursor-pointer hover:text-tokyo-primary transition-colors hover:underline decoration-tokyo-primary underline-offset-4 decoration-2">
-      {label}
-    </span>
   );
 }
 
