@@ -147,7 +147,6 @@ export default function App() {
               <HintNavItem label="/wakchu" onClick={() => setInput('/wakchu')} />
               <HintNavItem label="/aboutme" onClick={() => setInput('/aboutme')} />
               <HintNavItem label="/contact" onClick={() => setInput('/contact')} />
-              <HintNavItem label="/help" onClick={() => setInput('/help')} />
             </div>
           </div>
         </motion.div>
