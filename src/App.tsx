@@ -23,7 +23,6 @@ import { Home } from './pages/Home';
 import { AboutMe } from './pages/AboutMe';
 import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
-import { Wakchu } from './pages/Wakchu';
 
 export default function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -32,7 +31,7 @@ export default function App() {
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState('/home');
   const inputRef = useRef<HTMLInputElement>(null);
-  const pages = ['/home', '/wakchu', '/aboutme', '/projects', '/contact'];
+  const pages = ['/home', '/aboutme', '/projects', '/contact'];
   const commandAliases: Record<string, string> = { '/about': '/aboutme' };
 
   const query = input.trim().toLowerCase();
@@ -111,7 +110,6 @@ export default function App() {
           <span className="text-tokyo-primary font-bold text-sm tracking-tight">TERMINAL_V1.0.4</span>
           <nav className="hidden md:flex gap-4">
             <NavItem label="/home" active={currentPage === '/home'} onClick={() => setCurrentPage('/home')} />
-            <NavItem label="/wakchu" active={currentPage === '/wakchu'} onClick={() => setCurrentPage('/wakchu')} />
             <NavItem label="/projects" active={currentPage === '/projects'} onClick={() => setCurrentPage('/projects')} />
             <NavItem label="/aboutme" active={currentPage === '/aboutme'} onClick={() => setCurrentPage('/aboutme')} />
             <NavItem label="/contact" active={currentPage === '/contact'} onClick={() => setCurrentPage('/contact')} />
@@ -141,7 +139,7 @@ export default function App() {
           <div className="bg-tokyo-surface px-4 py-1.5 border-b border-tokyo-border flex justify-between items-center shrink-0">
             <div className="flex items-center gap-2">
               <Terminal size={14} className="text-tokyo-secondary" />
-              <span className="text-tokyo-secondary text-xs font-medium">wakchu@main: ~</span>
+              <span className="text-tokyo-secondary text-xs font-medium">user@main: ~</span>
             </div>
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 bg-tokyo-error"></div>
@@ -153,7 +151,6 @@ export default function App() {
           {/* Scrollable Content Area */}
           <div className="flex-grow p-6 md:p-8 overflow-y-auto custom-scrollbar bg-[radial-gradient(circle_at_50%_50%,_rgba(65,72,104,0.05)_0%,_transparent_100%)]">
             {currentPage === '/home' && <Home load={load} onContactClick={() => setCurrentPage('/contact')} />}
-            {currentPage === '/wakchu' && <Wakchu />}
             {currentPage === '/aboutme' && <AboutMe />}
             {currentPage === '/projects' && <Projects />}
             {currentPage === '/contact' && <Contact />}
@@ -245,7 +242,6 @@ export default function App() {
       {/* Mobile Sticky Navigation */}
       <nav className="md:hidden sticky bottom-0 left-0 w-full z-50 flex border-t border-tokyo-border bg-tokyo-bg h-14">
         <MobileNavItem icon={<Terminal size={20} />} active={currentPage === '/home'} onClick={() => setCurrentPage('/home')} />
-        <MobileNavItem icon={<Layers size={20} />} active={currentPage === '/wakchu'} onClick={() => setCurrentPage('/wakchu')} />
         <MobileNavItem icon={<Code2 size={20} />} active={currentPage === '/projects'} onClick={() => setCurrentPage('/projects')} />
         <MobileNavItem icon={<User size={20} />} active={currentPage === '/aboutme'} onClick={() => setCurrentPage('/aboutme')} />
         <MobileNavItem icon={<Mail size={20} />} active={currentPage === '/contact'} onClick={() => setCurrentPage('/contact')} />
@@ -257,7 +253,7 @@ export default function App() {
           <span>UTF-8 | 24:12 | 14ms</span>
           <span className="flex items-center gap-1"><Cpu size={10} /> CONNECTED via SSH_TRANSIT</span>
         </div>
-        <div>{timeString} | WAKCHU_OS v1.0.4</div>
+        <div>{timeString} | TERMINAL_OS v1.0.4</div>
       </footer>
     </div>
   );

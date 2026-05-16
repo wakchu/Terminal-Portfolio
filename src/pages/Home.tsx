@@ -84,7 +84,7 @@ export function Home({ load, onContactClick }: { load: number; onContactClick: (
         >
           <InfoBox
             title="03_CONTACT"
-            items={['Email', 'LinkedIn', 'GitHub', 'Twitter']}
+            items={['Email', 'LinkedIn', 'GitHub']}
             accent="secondary"
             icon={<Mail size={14} />}
           />

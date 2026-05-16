@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Mail, Linkedin, Github, Twitter, MapPin } from 'lucide-react';
+import { Mail, Linkedin, Github, MapPin } from 'lucide-react';
 
 export function Contact() {
   return (
@@ -39,16 +39,12 @@ export function Contact() {
           icon={<Github size={18} />} 
           label="GitHub: wakchu" 
         />
-        <ContactLink 
-          href="https://x.com/wakcha_" 
-          icon={<Twitter size={18} />} 
-          label="X: @wakcha_" 
-        />
+
       </div>
 
       <div className="mt-8 flex items-center gap-2 text-tokyo-muted text-xs font-mono font-bold uppercase tracking-widest">
         <MapPin size={12} />
-        <span>Location: Earth</span>
+        <span>Location: Milan, Italy</span>
       </div>
     </div>
   );
