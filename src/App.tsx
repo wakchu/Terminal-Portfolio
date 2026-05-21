@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useDragControls } from 'motion/react';
 import { 
   Terminal, 
   Code2, 
@@ -31,6 +31,8 @@ export default function App() {
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState('/home');
   const inputRef = useRef<HTMLInputElement>(null);
+  const constraintsRef = useRef<HTMLDivElement>(null);
+  const dragControls = useDragControls();
   const pages = ['/home', '/aboutme', '/projects', '/contact'];
   const commandAliases: Record<string, string> = { '/about': '/aboutme' };
 
@@ -129,14 +131,23 @@ export default function App() {
       </header>
 
       {/* Main Container */}
-      <main className="flex-grow p-4 md:p-8 flex items-center justify-center bg-tokyo-bg overflow-hidden">
+      <main ref={constraintsRef} className="flex-grow p-4 md:p-8 flex items-center justify-center bg-tokyo-bg-dark overflow-hidden relative">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-5xl border border-tokyo-border bg-tokyo-bg flex flex-col h-[716px] max-h-[85vh] shadow-2xl relative"
+          drag
+          dragControls={dragControls}
+          dragListener={false}
+          dragConstraints={constraintsRef}
+          dragElastic={0.1}
+          dragMomentum={false}
+          className="w-full max-w-5xl border border-tokyo-border bg-tokyo-bg flex flex-col h-[716px] max-h-[85vh] shadow-2xl relative z-10"
         >
           {/* Terminal Window Header */}
-          <div className="bg-tokyo-surface px-4 py-1.5 border-b border-tokyo-border flex justify-between items-center shrink-0">
+          <div 
+            onPointerDown={(e) => dragControls.start(e)}
+            className="bg-tokyo-surface px-4 py-1.5 border-b border-tokyo-border flex justify-between items-center shrink-0 cursor-grab active:cursor-grabbing select-none"
+          >
             <div className="flex items-center gap-2">
               <Terminal size={14} className="text-tokyo-secondary" />
               <span className="text-tokyo-secondary text-xs font-medium">user@main: ~</span>

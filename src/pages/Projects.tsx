@@ -19,6 +19,8 @@ const SELECTED_PROJECTS = [
   'Terminal Portfolio',
   'GymTrack',
   'SnowPal',
+  'Visigate-Project-Work',
+  'DanteLLM',
 ];
 
 const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');

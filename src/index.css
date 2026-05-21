@@ -7,6 +7,7 @@
   --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, monospace;
 
   --color-tokyo-bg: #1a1b26;
+  --color-tokyo-bg-dark: #130b24;
   --color-tokyo-surface: #24283b;
   --color-tokyo-primary: #bb9af7;
   --color-tokyo-secondary: #7aa2f7;
@@ -22,7 +23,7 @@
 
 @layer base {
   body {
-    @apply bg-tokyo-bg text-tokyo-text font-sans selection:bg-tokyo-primary/30 selection:text-white;
+    @apply bg-tokyo-bg-dark text-tokyo-text font-sans selection:bg-tokyo-primary/30 selection:text-white;
   }
 }
 
