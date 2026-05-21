@@ -17,12 +17,14 @@ import {
   Cpu, 
   Database, 
   Layers, 
-  Activity 
+  Activity,
+  Gamepad2
 } from 'lucide-react';
 import { Home } from './pages/Home';
 import { AboutMe } from './pages/AboutMe';
 import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
+import { Snake } from './pages/Snake';
 
 export default function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -33,7 +35,7 @@ export default function App() {
   const inputRef = useRef<HTMLInputElement>(null);
   const constraintsRef = useRef<HTMLDivElement>(null);
   const dragControls = useDragControls();
-  const pages = ['/home', '/aboutme', '/projects', '/contact'];
+  const pages = ['/home', '/aboutme', '/projects', '/contact', '/snake'];
   const commandAliases: Record<string, string> = { '/about': '/aboutme' };
 
   const query = input.trim().toLowerCase();
@@ -115,6 +117,7 @@ export default function App() {
             <NavItem label="/projects" active={currentPage === '/projects'} onClick={() => setCurrentPage('/projects')} />
             <NavItem label="/aboutme" active={currentPage === '/aboutme'} onClick={() => setCurrentPage('/aboutme')} />
             <NavItem label="/contact" active={currentPage === '/contact'} onClick={() => setCurrentPage('/contact')} />
+            <NavItem label="/snake" active={currentPage === '/snake'} onClick={() => setCurrentPage('/snake')} />
           </nav>
         </div>
         <div className="flex items-center gap-2 text-tokyo-muted h-full">
@@ -165,6 +168,7 @@ export default function App() {
             {currentPage === '/aboutme' && <AboutMe />}
             {currentPage === '/projects' && <Projects />}
             {currentPage === '/contact' && <Contact />}
+            {currentPage === '/snake' && <Snake />}
           </div>
 
           {/* Prompt Area */}
@@ -255,6 +259,7 @@ export default function App() {
         <MobileNavItem icon={<Terminal size={20} />} active={currentPage === '/home'} onClick={() => setCurrentPage('/home')} />
         <MobileNavItem icon={<Code2 size={20} />} active={currentPage === '/projects'} onClick={() => setCurrentPage('/projects')} />
         <MobileNavItem icon={<User size={20} />} active={currentPage === '/aboutme'} onClick={() => setCurrentPage('/aboutme')} />
+        <MobileNavItem icon={<Gamepad2 size={20} />} active={currentPage === '/snake'} onClick={() => setCurrentPage('/snake')} />
         <MobileNavItem icon={<Mail size={20} />} active={currentPage === '/contact'} onClick={() => setCurrentPage('/contact')} />
       </nav>
 
