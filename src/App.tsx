@@ -26,12 +26,21 @@ import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
 import { Snake } from './pages/Snake';
 
+const rotatingSuggestions = [
+  'try /projects',
+  'try /aboutme',
+  'try /snake',
+  'try /contact',
+  'try /home',
+];
+
 export default function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [load, setLoad] = useState(74);
   const [input, setInput] = useState('');
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState('/home');
+  const [suggestionIndex, setSuggestionIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const constraintsRef = useRef<HTMLDivElement>(null);
   const dragControls = useDragControls();
@@ -72,9 +81,13 @@ export default function App() {
     const loadTimer = setInterval(() => {
       setLoad(prev => Math.min(95, Math.max(70, prev + (Math.random() * 4 - 2))));
     }, 3000);
+    const suggestionTimer = setInterval(() => {
+      setSuggestionIndex((prev) => (prev + 1) % rotatingSuggestions.length);
+    }, 15000);
     return () => {
       clearInterval(timer);
       clearInterval(loadTimer);
+      clearInterval(suggestionTimer);
     };
   }, []);
 
@@ -221,12 +234,28 @@ export default function App() {
             />
             <div className="flex items-center gap-3">
               <span className="text-tokyo-primary font-bold shrink-0"><ChevronRight size={18} /></span>
-              <div className="flex-grow flex items-center flex-wrap break-all">
-                <span className="text-tokyo-text text-sm whitespace-pre-wrap">{input}</span>
+              <div className="flex-grow flex items-center flex-wrap break-all relative">
+                {input === '' && (
+                  <span className="absolute left-[20px] text-tokyo-muted text-sm pointer-events-none select-none h-5 flex items-center z-10">
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={suggestionIndex}
+                        initial={{ opacity: 0, y: 2 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -2 }}
+                        transition={{ duration: 0.3 }}
+                        className="inline-block"
+                      >
+                        {rotatingSuggestions[suggestionIndex]}
+                      </motion.span>
+                    </AnimatePresence>
+                  </span>
+                )}
+                <span className="text-tokyo-text text-sm whitespace-pre-wrap z-10">{input}</span>
                 <motion.span 
                   animate={{ opacity: [1, 0] }}
                   transition={{ repeat: Infinity, duration: 1, ease: "steps(2, start)" }}
-                  className="w-2.5 h-5 bg-tokyo-primary inline-block ml-1"
+                  className="w-2.5 h-5 bg-tokyo-primary inline-block ml-1 z-10"
                 />
               </div>
             </div>
