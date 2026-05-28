@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap');
+      .favicon-text {
+        font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+        font-size: 260px;
+        fill: #bb9af7;
+        text-anchor: middle;
+        dominant-baseline: central;
+      }
+    </style>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4c1d95" />
+      <stop offset="50%" stop-color="#2e1065" />
+      <stop offset="100%" stop-color="#130b24" />
+    </linearGradient>
+  </defs>
+  <!-- Premium rounded square background (squircle/rounded rect) -->
+  <rect width="512" height="512" rx="128" fill="url(#purpleGradient)" />
+  <!-- Inner subtle border for a premium glow effect -->
+  <rect x="12" y="12" width="488" height="488" rx="116" fill="none" stroke="#bb9af7" stroke-width="8" stroke-opacity="0.15" />
+  <!-- Center 'W' using the exact home font -->
+  <text x="256" y="266" class="favicon-text">W</text>
+</svg>
